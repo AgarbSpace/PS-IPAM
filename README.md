@@ -1,4 +1,4 @@
-# PS-IPAM
+# PS-IPAM :leaves:
 
 ## The project was inicialized by Vite.
 
