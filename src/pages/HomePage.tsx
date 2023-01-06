@@ -1,26 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { store } from "../app/store";
+import DistrictInfos from "../components/DistrictInfos";
+import StateDistricts from "../components/StateDistricts";
 import { selected } from "../features/states/statesSlice";
 import { useFetchStatesQuery } from "../features/StatesApi/statesApiSlice";
+import { Container, Select } from "./styled";
 
 export default function HomePage() {
   const [stateSelected, setStateSelected] = useState<string|null>(null);
+  const [districtSelected, setDistrictSelected] = useState<string|null>(null);
   const dispatch = useAppDispatch();
   const States = useFetchStatesQuery();
-
 
   function handleChange(e: any) {
     dispatch(selected(e.target.value))
     setStateSelected(store.getState().states.value);
   }
-  return <>
+
+  return <Container>
     {States.data === undefined ? <div>Carregando</div> :
-      <select name='select' onChange={handleChange} >
-        <option value="" disabled selected hidden >Selecione um Estado</option>
-        {States.data.map((option, index) => <option key={index} value={option.sigla}>{option.nome}</option>)}
-      </select>
+      <Select name='select' defaultValue={'DEFAULT'} onChange={handleChange} >
+        <option value="DEFAULT" disabled >Selecione um Estado</option>
+        {States.data.map((option: any) => <option key={option.id} value={option.sigla}>{option.nome}</option>)}
+      </Select>
     }
-    {stateSelected === null ? <></> : <div>{ stateSelected }</div>}
-  </>
+    {stateSelected === null ? <></> : <StateDistricts setDistrictSelected={setDistrictSelected} />}
+    {districtSelected === null ? <></> : <DistrictInfos />}
+
+  </Container>
 }

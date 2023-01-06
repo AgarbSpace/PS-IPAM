@@ -11,13 +11,13 @@ const initialState: State = {
 }
 
 const statesSlice = createSlice({
-    name: 'State',
-    initialState,
-    reducers: {
-        selected(state, action: PayloadAction<string>) {
-            // it's okay to do this because Immen makes it imutable under the hood
-            state.value = action.payload;
-        },
+  name: 'State',
+  initialState,
+  reducers: {
+    selected(state, action: PayloadAction<string>) {
+        // it's okay to do this because Immen makes it imutable under the hood
+        state.value = action.payload;
+      },
     }
 });
 
